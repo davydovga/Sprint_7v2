@@ -1,4 +1,4 @@
-package Tests;
+package tests;
 
 import configuration.files.Config;
 import io.restassured.RestAssured;

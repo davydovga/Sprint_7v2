@@ -24,8 +24,7 @@ public class BaseAPI {
 
     public static Response getReq(Map<String, Object> map, String endpoint){
         return given()
-                .contentType(ContentType.JSON)
-                .body(map)
+                .queryParams(map)
                 .when()
                 .get(endpoint);
     }

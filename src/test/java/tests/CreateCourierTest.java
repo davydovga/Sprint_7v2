@@ -1,4 +1,4 @@
-package Tests;
+package tests;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
@@ -15,8 +15,7 @@ import static api.CourierAPI.*;
 import static configuration.files.ErrorMessages.COURIER_CREATE_GEMINI;
 import static org.apache.http.HttpStatus.SC_CONFLICT;
 import static org.apache.http.HttpStatus.SC_CREATED;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 
 public class CreateCourierTest extends BaseTest {
@@ -35,7 +34,7 @@ public class CreateCourierTest extends BaseTest {
     @DisplayName("Метод проверки создания курьера")
     @Description("Проверка вызова метода и корретности статускода (ожидается 201)")
     public void checkCreateCourierResponse201Test(){
-        Response response = CreateCourierAPI(createCourierReq);
+        Response response = createCourierAPI(createCourierReq);
 
         response.then()
                 .assertThat()
@@ -49,9 +48,9 @@ public class CreateCourierTest extends BaseTest {
     @DisplayName("Метод для проверки невозможности создания двух одинаковых курьеров")
     @Description("Метод проверяет, что невозможно создать два одинаковых курьера и корректность ответа метода")
     public void checkCreateCourierGeminiTest(){
-        CreateCourierAPI(createCourierReq);
+        createCourierAPI(createCourierReq);
 
-        Response response = CreateCourierAPI(createCourierReq);
+        Response response = createCourierAPI(createCourierReq);
         response.then()
                 .assertThat()
                 .statusCode(SC_CONFLICT); // status code 409
@@ -65,11 +64,11 @@ public class CreateCourierTest extends BaseTest {
     @DisplayName("Метод удаления курьера (deleteCourierAfterCreateTest)")
     @Description("Удаляет созданного курьера после теста")
     public void deleteCourierAfterCreateTest(){
-        Response response = CourierLoginAPI(
+        Response response = courierLoginAPI(
                 new CourierLoginReq(
                 createCourierReq.getLogin(),
                 createCourierReq.getPassword()));
-        DeleteCourierAPI(response.jsonPath().get("id").toString());
+        deleteCourierAPI(response.jsonPath().get("id").toString());
 
     }
 

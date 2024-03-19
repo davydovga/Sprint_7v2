@@ -1,4 +1,4 @@
-package Tests;
+package tests;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
@@ -10,7 +10,7 @@ import org.junit.runners.Parameterized;
 import requests.courier.CreateCourierReq;
 import responses.courier.CreateCourierResponse;
 
-import static api.CourierAPI.CreateCourierAPI;
+import static api.CourierAPI.createCourierAPI;
 import static configuration.files.ErrorMessages.COURIER_CREATE_BAD_REQ;
 import static org.apache.http.HttpStatus.SC_BAD_REQUEST;
 import static org.junit.Assert.assertEquals;
@@ -50,7 +50,7 @@ public class CreateCourierWithoutParamsTest extends BaseTest {
 
         CreateCourierReq parametrizedCourierReq = new CreateCourierReq(login,password,firstName);
 
-        Response response = CreateCourierAPI(parametrizedCourierReq);
+        Response response = createCourierAPI(parametrizedCourierReq);
         response.then()
                 .assertThat()
                 .statusCode(SC_BAD_REQUEST); // status code 400

@@ -1,4 +1,4 @@
-package Tests;
+package tests;
 
 import configuration.files.VehicleColour;
 import io.qameta.allure.Description;
@@ -12,7 +12,7 @@ import org.junit.runners.Parameterized;
 import requests.order.CreateOrderReq;
 import responses.order.CreateOrderResponse;
 
-import static api.OrderAPI.CreateOrderAPI;
+import static api.OrderAPI.createOrderAPI;
 import static org.apache.http.HttpStatus.SC_CREATED;
 import static org.junit.Assert.assertNotEquals;
 
@@ -65,7 +65,7 @@ public class CreateOrderParamsTest extends BaseTest {
     @DisplayName("Метод проверяет корректность ответа метода при создании заказа (checkCreateOrderColorsSwitcherTest)")
     @Description("Метод получает статускод = 200 и проверяет что получен номер заказа не равный 0")
     public void checkCreateOrderColorsSwitcherTest(){
-        Response response = CreateOrderAPI(createOrderReq);
+        Response response = createOrderAPI(createOrderReq);
 
         response.then().statusCode(SC_CREATED);
         assertNotEquals("Получено недопустимое значение track = 0",

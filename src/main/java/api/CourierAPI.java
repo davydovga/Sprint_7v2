@@ -12,16 +12,16 @@ import static configuration.files.Config.*;
 
 public class CourierAPI {
     @Step("Отправка запроса на создание курьера")
-    public static Response CreateCourierAPI(CreateCourierReq body){
+    public static Response createCourierAPI(CreateCourierReq body){
         return baseReq(body, CREATE_COURIER_ENDPOINT);
     }
 
     @Step("Отправка запроса на вход под логином и паролем курьера")
-    public static Response CourierLoginAPI (CourierLoginReq body){
+    public static Response courierLoginAPI(CourierLoginReq body){
         return baseReq(body, COURIER_LOGIN_ENDPOINT);
     }
     @Step("Удаление курьера")
-    public static void DeleteCourierAPI (String id){
+    public static void deleteCourierAPI(String id){
         deleteReq(DELETE_COURIER_ENDPOINT + id);
     }
 

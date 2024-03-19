@@ -1,4 +1,4 @@
-package Tests;
+package tests;
 
 
 import io.qameta.allure.Description;
@@ -9,13 +9,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import responses.order.GetOrderResponse;
+import responses.order.Orders;
 
 import java.util.List;
 import java.util.Map;
 
-import static api.OrderAPI.GetOrderAPI;
+import static api.OrderAPI.getOrderAPI;
 import static org.apache.http.HttpStatus.SC_OK;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 @RunWith(Parameterized.class)
 @AllArgsConstructor
@@ -27,7 +28,7 @@ public class GetOrderParamsTest extends BaseTest {
     public static List<Map<Object, Object>> getDataForOrder() {
         return List.of(
                 Map.of(
-                        "courierId","12345"),
+                        "courierId","278976"),
                 Map.of(
                         "nearestStation","2"),
                 Map.of(
@@ -41,15 +42,17 @@ public class GetOrderParamsTest extends BaseTest {
     @DisplayName("Метод проверки данных по заказу")
     @Description("Метод проверяет корректность ответа метода при получении информации по заказу (checkCreateOrderColorsSwitcherTest)")
     public void checkGetOrdersListStatusCode(){
-        Response response = GetOrderAPI(body);
+        Response response = getOrderAPI(body);
 
         response.then()
                 .assertThat()
                 .statusCode(SC_OK);
 
-        assertNotNull("Не удалось получить информацию по заказу",
-                response.as(GetOrderResponse.class)
-                        .getOrders());
+        List<Orders> orders = response.as(GetOrderResponse.class).getOrders();
+
+        assertNotNull("Не удалось получить информацию по заказу. Отсутсвует обьект orders", orders);
+
+        assertFalse("Не удалось получить информацию по заказу. Обьект orders пуст.", orders.isEmpty());
     }
 
 }

@@ -1,4 +1,4 @@
-package Tests;
+package tests;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
@@ -18,6 +18,7 @@ import static org.junit.Assert.*;
 import static org.apache.http.HttpStatus.SC_NOT_FOUND;
 import static org.apache.http.HttpStatus.SC_OK;
 
+
 public class CourierLoginTest extends BaseTest {
     private CourierLoginReq courierLoginReq;
 
@@ -33,14 +34,14 @@ public class CourierLoginTest extends BaseTest {
                 createCourierReq.getLogin(),
                 createCourierReq.getPassword());
 
-        CreateCourierAPI(createCourierReq);
+        createCourierAPI(createCourierReq);
     }
 
     @Test
     @DisplayName("Метод проверки входа под созданной учетной записью курьера (checkCourierCanLoginTest)")
     @Description("Метод создает экземпляр курьера и проверяет возможность войти под его данными и проверяет ответ метода")
     public void checkCourierCanLoginTest(){
-        Response response = CourierLoginAPI(courierLoginReq);
+        Response response = courierLoginAPI(courierLoginReq);
 
         response.then()
                 .assertThat()
@@ -57,7 +58,7 @@ public class CourierLoginTest extends BaseTest {
                 courierLoginReq.getLogin() + RandomStringUtils.randomNumeric(3),
                 courierLoginReq.getPassword() + RandomStringUtils.randomAlphabetic(3)
         );
-        Response response = CourierLoginAPI(courierLoginInvalidReq);
+        Response response = courierLoginAPI(courierLoginInvalidReq);
         response.then()
                 .assertThat()
                 .statusCode(SC_NOT_FOUND); // status code 404
@@ -70,8 +71,8 @@ public class CourierLoginTest extends BaseTest {
     @DisplayName("Метод удаления курьера (deleteCourierAfterTest)")
     @Description("Удаляет созданного курьера после теста")
     public void deleteCourierAfterTest(){
-        Response response = CourierLoginAPI(courierLoginReq);
-        DeleteCourierAPI(response.jsonPath().get("id").toString());
+        Response response = courierLoginAPI(courierLoginReq);
+        deleteCourierAPI(response.jsonPath().get("id").toString());
     }
 
 
